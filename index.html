@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sedric Taylor · Systems &amp; Security</title>
+<meta name="description" content="Sedric Taylor — systems administration, IAM and security. Projects and open-source repos.">
+<style>
+  :root {
+    --bg: #0b0f14;
+    --panel: #121821;
+    --panel-hi: #182130;
+    --line: #223044;
+    --text: #e6edf5;
+    --muted: #8fa1b5;
+    --accent: #4fd1a5;
+    --accent-2: #5aa9ff;
+    --radius: 14px;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f6f8fb;
+      --panel: #ffffff;
+      --panel-hi: #f0f4f9;
+      --line: #dbe3ee;
+      --text: #14202e;
+      --muted: #5b6b7e;
+      --accent: #0f9d78;
+      --accent-2: #2563eb;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(900px 400px at 85% -10%, color-mix(in srgb, var(--accent-2) 18%, transparent), transparent 70%),
+      radial-gradient(700px 400px at -10% 0%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%),
+      var(--bg);
+    background-attachment: fixed;
+    color: var(--text);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+
+  header.hero { padding: 88px 0 48px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font: 500 13px/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    color: var(--accent); letter-spacing: .04em;
+    padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px;
+    background: color-mix(in srgb, var(--panel) 80%, transparent);
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent); }
+  h1 { font-size: clamp(36px, 7vw, 60px); line-height: 1.05; margin: 22px 0 14px; letter-spacing: -.02em; }
+  h1 span { background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lead { max-width: 620px; color: var(--muted); font-size: 18px; margin: 0 0 28px; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 15px;
+    border: 1px solid var(--line); background: var(--panel);
+    transition: transform .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .btn:hover { transform: translateY(-2px); border-color: var(--accent); background: var(--panel-hi); }
+  .btn.primary { background: linear-gradient(90deg, var(--accent), var(--accent-2)); color: #05110d; border-color: transparent; }
+  .btn.primary:hover { filter: brightness(1.08); }
+
+  section { padding: 36px 0; }
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+  h2 { font-size: 22px; margin: 0; letter-spacing: -.01em; }
+  .count { color: var(--muted); font: 13px ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    padding: 6px 12px; border-radius: 999px; font-size: 14px;
+    border: 1px solid var(--line); background: var(--panel); color: var(--muted);
+  }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 16px; }
+  .card {
+    display: flex; flex-direction: column; gap: 10px;
+    padding: 20px; border-radius: var(--radius);
+    background: var(--panel); border: 1px solid var(--line);
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    min-height: 150px;
+  }
+  .card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 14px 34px -18px rgba(0,0,0,.6); }
+  .card h3 { margin: 0; font-size: 17px; word-break: break-word; }
+  .card p { margin: 0; color: var(--muted); font-size: 14.5px; flex: 1; }
+  .meta { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--muted); align-items: center; }
+  .lang { display: inline-flex; align-items: center; gap: 6px; }
+  .lang i { width: 10px; height: 10px; border-radius: 50%; background: var(--accent-2); display: inline-block; }
+
+  .skeleton { background: linear-gradient(90deg, var(--panel) 25%, var(--panel-hi) 50%, var(--panel) 75%); background-size: 200% 100%; animation: shimmer 1.3s infinite; border-radius: var(--radius); height: 150px; border: 1px solid var(--line); }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+  .note { color: var(--muted); font-size: 14px; padding: 18px; border: 1px dashed var(--line); border-radius: var(--radius); }
+  .note a { color: var(--accent-2); text-decoration: underline; }
+
+  footer { padding: 40px 0 60px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); margin-top: 24px; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="eyebrow"><span class="dot"></span>open to remote work</span>
+    <h1>Hi, I'm <span>Sedric Taylor</span>.</h1>
+    <p class="lead">Systems administration, identity &amp; access management, and security. I like building tools that automate the boring parts of IT.</p>
+    <div class="links">
+      <a class="btn primary" href="#repos">See my repos</a>
+      <a class="btn" href="https://github.com/s-m-taylor" rel="noopener">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/s-m-taylor" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://www.sedrictaylor.com" rel="noopener">Website</a>
+    </div>
+  </header>
+
+  <section aria-labelledby="focus">
+    <div class="section-head"><h2 id="focus">What I work with</h2></div>
+    <div class="tags">
+      <span class="tag">Systems Administration</span>
+      <span class="tag">IAM / RBAC</span>
+      <span class="tag">SIEM</span>
+      <span class="tag">Vulnerability Management</span>
+      <span class="tag">NIST CSF · ISO 27001</span>
+      <span class="tag">Linux (Ubuntu)</span>
+      <span class="tag">Microsoft 365</span>
+      <span class="tag">PowerShell &amp; Shell</span>
+      <span class="tag">AWS</span>
+    </div>
+  </section>
+
+  <section id="repos" aria-labelledby="repos-h">
+    <div class="section-head">
+      <h2 id="repos-h">Repositories</h2>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="grid" id="grid" aria-live="polite">
+      <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="year"></span> Sedric Taylor · Repo list is pulled live from the GitHub API.
+  </footer>
+</div>
+
+<script>
+(function () {
+  var USER = "s-m-taylor";
+  var HOME_REPO = USER + ".github.io";
+  var grid = document.getElementById("grid");
+  var count = document.getElementById("count");
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function ago(iso) {
+    var d = Math.floor((Date.now() - new Date(iso)) / 86400000);
+    if (d < 1) return "today";
+    if (d < 30) return d + "d ago";
+    if (d < 365) return Math.floor(d / 30) + "mo ago";
+    return Math.floor(d / 365) + "y ago";
+  }
+  function fallback(msg) {
+    grid.innerHTML = '<div class="note">' + msg +
+      ' <a href="https://github.com/' + USER + '?tab=repositories" rel="noopener">View repositories on GitHub</a>.</div>';
+    count.textContent = "";
+  }
+
+  fetch("https://api.github.com/users/" + USER + "/repos?per_page=100&sort=pushed")
+    .then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      return r.json();
+    })
+    .then(function (repos) {
+      repos = repos.filter(function (r) { return !r.fork && !r.archived && r.name !== HOME_REPO; })
+                   .sort(function (a, b) { return new Date(b.pushed_at) - new Date(a.pushed_at); });
+      if (!repos.length) return fallback("No public repositories to show yet.");
+      count.textContent = repos.length + (repos.length === 1 ? " project" : " projects");
+      grid.innerHTML = repos.map(function (r) {
+        return '<a class="card" href="' + esc(r.html_url) + '" rel="noopener">' +
+          '<h3>' + esc(r.name) + '</h3>' +
+          '<p>' + esc(r.description || "No description yet.") + '</p>' +
+          '<div class="meta">' +
+            (r.language ? '<span class="lang"><i></i>' + esc(r.language) + '</span>' : '') +
+            '<span>★ ' + r.stargazers_count + '</span>' +
+            '<span>Updated ' + ago(r.pushed_at) + '</span>' +
+          '</div></a>';
+      }).join("");
+    })
+    .catch(function () { fallback("Couldn't load repos right now (GitHub's API may be rate-limiting)."); });
+})();
+</script>
+</body>
+</html>
